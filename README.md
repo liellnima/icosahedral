@@ -40,6 +40,8 @@ OPTIONAL: In case you want to run `load.py`:
 3. Install requirements: `pip install python_requirements.txt`
 4. Run code snippet: `python load.py`
 
+In case you run into problems with `eccodes`, please try:
+`conda install -c conda-forge eccodes`
+
 # Note
 The attributes of the GRIB2 files will automatically say that the variable in question is "surface pressure" (sp). This is not true - this is mean sea level pressure (msl). The short-name "msl" is GRIB2-conform, but for some reason the variable name is not accepted and instead read as surface pressure. Please refer to the NOAA website linked above or the raw data files to retrieve the correct attributes.
-
