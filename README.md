@@ -21,6 +21,8 @@ Check out `load.py` for an example of how to load the data in python.
 
 `$MEAN_DAYS` is the number of days over which the data should be averaged. Default is `$MEAN_DAYS=7`, i.e. a weekly average is calculated. Put `1` if you do not want that any average is calculated.
 
+The script automatically creates a mapping from the hexgonal grid cells to longitude/latitude values. The resulting mapping can be found in the folder `mappings`. This assumes that all data files had the same resolution and are operating on the exact same hexagonal grid.
+
 # Installation and Setup
 ## Command line tools
 
@@ -45,3 +47,5 @@ In case you run into problems with `eccodes`, please try:
 
 # Note
 The attributes of the GRIB2 files will automatically say that the variable in question is "surface pressure" (sp). This is not true - this is mean sea level pressure (msl). The short-name "msl" is GRIB2-conform, but for some reason the variable name is not accepted and instead read as surface pressure. Please refer to the NOAA website linked above or the raw data files to retrieve the correct attributes.
+
+The file `grid_gme.cc` was uploaded for reference in case someone needs to look into the orginal code of how the data is projected to the grid. The file is not used within the code and stems from the cdo package.

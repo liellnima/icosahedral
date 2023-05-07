@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # First argument: which file should be converted
-# Second argument: NI parameter (distance between hexagon grid cells in km) 
+# Second argument: NI parameter (distance between hexagon grid cells in km)
 # Third argument: type of remapping (default: remapcon2)
 NI=${2:-24}
 REMAP=${3:-"remapcon"}
@@ -20,7 +20,7 @@ else
 	echo "$1 is not valid"
 	exit 1
 fi
-	
+
+./getlonlat.sh
+
 echo "Finished."
-
-
