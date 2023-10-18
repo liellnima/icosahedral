@@ -10,12 +10,16 @@ Check out `load.py` for an example of how to load the data in python.
 # Usage
 
 ```
-./run.sh $INPUT $MON $NI $REMAP_FUNC $MEAN_DAYS
+./run.sh $INPUT $MON $VARNC $VARGRIB $NI $REMAP_FUNC $MEAN_DAYS
 ```
 
 `$INPUT` can be both a file (e.g. `slp.1948.nc`) or a directory (e.g. `raw`) that contains a bunch of netcdf files.
 
 `$MON` is a string flag `mon` indicating if you have monthly data summed up into one file. Default is `$MON=nan`. If set to `mon`, the data is split up into annual files. `$INPUT` has to be one specific file in this case. Example command: `./run.sh /raw/air.mon.mean.nc mon`.
+
+`$VARNC` is the name of the variable you downloaded. The name is indicated in the file names. The default is `slp`.
+
+`$VARGRIB` is how the variable should be renamed in order to be GRIB2 conform. See also section 'Rename Variables' to find out how you need to rename your original variable.
 
 `$NI` is the distance between the hexagonal grid cells in kilometers. The default is `$NI=25` (25 km), leading to 6760 grid cells.
 

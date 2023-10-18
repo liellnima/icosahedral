@@ -4,17 +4,21 @@
 # Second argument: NI parameter (distance between hexagon grid cells in km)
 # Third argument: type of remapping (default: remapcon2)
 # Fourth argument: how many days should be meaned together
+# Fifth argument: how the climate variable is named in the data file(s)
+# Sixth argument: how the climate variable needs to be renamed for GRIB2 conventions
 NI=${2:-24}
 REMAP=${3:-"remapcon"}
 DAYS=${4:-1}
 ROOT=${1/.nc}
+VARNC=${5:"slp"}
+VARGRIB=${6:"msl"}
 
 # convert netcdf file to grib file
 
 # rename variable for mean sea level pressure (GRIB convention)
-ncrename -h -O -v slp,msl $1 $ROOT"_renamed.nc"
+ncrename -h -O -v $VARNC,$VARGRIB $1 $ROOT"_renamed.nc"
 # drop time_bnds variable (GRIB convention)
-cdo select,name=msl $ROOT"_renamed.nc" $ROOT"_updated.nc"
+cdo select,name=$VARGRIB $ROOT"_renamed.nc" $ROOT"_updated.nc"
 # convert to GRIB2
 cdo -f grb2 copy $ROOT"_updated.nc" $ROOT"_longlat.grib"
 
