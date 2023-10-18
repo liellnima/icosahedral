@@ -10,16 +10,18 @@ Check out `load.py` for an example of how to load the data in python.
 # Usage
 
 ```
-./run.sh $INPUT $NI $REMAP_FUNC $MEAN_DAYS
+./run.sh $INPUT $NI $REMAP_FUNC $MEAN_DAYS $MON
 ```
 
 `$INPUT` can be both a file (e.g. `slp.1948.nc`) or a directory (e.g. `raw`) that contains a bunch of netcdf files.
 
-`$NI` is the distance between the hexagonal grid cells in kilometers. The default is `NI=25` (25 km), leading to 6760 grid cells.
+`$NI` is the distance between the hexagonal grid cells in kilometers. The default is `$NI=25` (25 km), leading to 6760 grid cells.
 
 `$REMAP_FUNC` is the function that should be used for remapping. Default is `remapcon` (conservative first order remapping). The following options are possible: "remapbil", "remapbic", "remapnn", "remapdis", "remapcon", "remapcon2".
 
-`$MEAN_DAYS` is the number of days over which the data should be averaged. Default is `$MEAN_DAYS=7`, i.e. a weekly average is calculated. Put `1` if you do not want that any average is calculated.
+`$MEAN_DAYS` is the number of days over which the data should be averaged. Default is `$MEAN_DAYS=7`, i.e. a weekly average is calculated. Put `1` if you do not want that any average is calculated (or drop this argument).
+
+`$MON`is a flag indicating if you have monthly data summed up into one file. Default is `$MON=false`. If set to `true`, the data is split up into annual files.
 
 The script automatically creates a mapping from the hexgonal grid cells to longitude/latitude values. The resulting mapping can be found in the folder `mappings`. This assumes that all data files had the same resolution and are operating on the exact same hexagonal grid.
 
@@ -34,6 +36,24 @@ The following command line tools must be installed:
 ## Data
 Download the data (e.g. mean level sea pressure) from [NOAA](https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html) and put it in the directory `raw/`.
 
+### Download many files
+If you want to download several files, e.g. all annual files of Air Temperature 2m above surface, you can first move into the appropiate directory (`raw/`) and use wget here:
+
+```
+wget -r -nd --no-parent -A 'air.2m.gauss.*.nc' https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis/Dailies/surface_gauss/
+```
+
+### Split file
+If you have one file that collects monthly data for a range of years (1948 - 2023), you can run the following command to get a seperate file for each year:
+
+```
+cdo splityear $VARIABLE.mon.mean.nc $VARIABLE.mon.mean.
+```
+With `$VARIABLE` being for example 'air'.
+
+## Rename variables
+If you are using different variables from the NOAA NCEP reanlysis data, you need to adapt the script a little bit to your files and new variable names. Specifically, you will need to rename your variable (e.g. 'temp') to a GRIB2 conform variable naming (e.g. 't'). To find out how you have to rename your variables, check out the [ECMWF GRIB Parameter Database](https://codes.ecmwf.int/grib/param-db/).
+
 ## Optional: Python packages
 OPTIONAL: In case you want to run `load.py`:
 
@@ -44,6 +64,7 @@ OPTIONAL: In case you want to run `load.py`:
 
 In case you run into problems with `eccodes`, please try:
 `conda install -c conda-forge eccodes`
+
 
 # Note
 The attributes of the GRIB2 files will automatically say that the variable in question is "surface pressure" (sp). This is not true - this is mean sea level pressure (msl). The short-name "msl" is GRIB2-conform, but for some reason the variable name is not accepted and instead read as surface pressure. Please refer to the NOAA website linked above or the raw data files to retrieve the correct attributes.
