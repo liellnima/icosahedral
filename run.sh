@@ -1,22 +1,22 @@
 #!/bin/bash
 
 # First argument: which file should be converted
-# Second argument: NI parameter (distance between hexagon grid cells in km)
-# Third argument: type of remapping (default: remapcon2)
-# Fourth argument: how many days should be meaned together
-# Fifth argument: indicate if you have one datafile with all the monthly data
-NI=${2:-24}
-REMAP=${3:-"remapcon"}
-DAYS=${4:-7}
-MON=${5:-"false"}
+# Second argument: indicate if you have one datafile with all the monthly data
+# Third argument: NI parameter (distance between hexagon grid cells in km)
+# Fourth argument: type of remapping (default: remapcon2)
+# Fifth argument: how many days should be meaned together
+
+MON=${2:-"nan"}
+NI=${3:-24}
+REMAP=${4:-"remapcon"}
+DAYS=${5:-7}
 
 ROOT=${1/.nc}
 
-if [[ $MON == "true"]]; then
+if [[ $MON == "mon" ]]; then
 	cdo splityear $1 $ROOT
 	DAYS=1
 fi
-
 
 echo "Remap $1 with NI=$NI and remapping function $REMAP..."
 

@@ -10,10 +10,12 @@ Check out `load.py` for an example of how to load the data in python.
 # Usage
 
 ```
-./run.sh $INPUT $NI $REMAP_FUNC $MEAN_DAYS $MON
+./run.sh $INPUT $MON $NI $REMAP_FUNC $MEAN_DAYS
 ```
 
 `$INPUT` can be both a file (e.g. `slp.1948.nc`) or a directory (e.g. `raw`) that contains a bunch of netcdf files.
+
+`$MON` is a string flag `mon` indicating if you have monthly data summed up into one file. Default is `$MON=nan`. If set to `true`, the data is split up into annual files. `$INPUT` has to be one specific file in this case. Example command: `./run.sh /raw/air.mon.mean.nc mon`.
 
 `$NI` is the distance between the hexagonal grid cells in kilometers. The default is `$NI=25` (25 km), leading to 6760 grid cells.
 
@@ -21,7 +23,7 @@ Check out `load.py` for an example of how to load the data in python.
 
 `$MEAN_DAYS` is the number of days over which the data should be averaged. Default is `$MEAN_DAYS=7`, i.e. a weekly average is calculated. Put `1` if you do not want that any average is calculated (or drop this argument).
 
-`$MON`is a flag indicating if you have monthly data summed up into one file. Default is `$MON=false`. If set to `true`, the data is split up into annual files.
+
 
 The script automatically creates a mapping from the hexgonal grid cells to longitude/latitude values. The resulting mapping can be found in the folder `mappings`. This assumes that all data files had the same resolution and are operating on the exact same hexagonal grid.
 
