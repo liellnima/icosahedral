@@ -11,24 +11,30 @@ NI=${3:-24}
 REMAP=${4:-"remapcon"}
 DAYS=${5:-7}
 
+FILES=$1
 ROOT=${1/.nc}
+
+echo $ROOT
+echo $FILES
 
 if [[ $MON == "mon" ]]; then
 	cdo splityear $1 $ROOT
+	FILES="$(dirname "$1")"
 	DAYS=1
+	rm $1
 fi
 
-echo "Remap $1 with NI=$NI and remapping function $REMAP..."
+echo "Remap $FILES with NI=$NI and remapping function $REMAP..."
 
-if [[ -f $1 ]]; then
-	./remap2icosahedral.sh $1 $NI $REMAP $DAYS
-elif [[ -d $1 ]]; then
-	for file in $1/*.nc; do
+if [[ -f $FILES ]]; then
+	./remap2icosahedral.sh $FILES $NI $REMAP $DAYS
+elif [[ -d $FILES ]]; then
+	for file in $FILES/*.nc; do
 		file_path=`readlink -f $file`
 		./remap2icosahedral.sh $file_path $NI $REMAP $DAYS
 	done
 else
-	echo "$1 is not valid"
+	echo "$FILES is not valid"
 	exit 1
 fi
 
