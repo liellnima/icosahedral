@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # First argument: which file should be converted
-# Second argument: NI parameter (distance between hexagon grid cells in km) 
+# Second argument: NI parameter (distance between hexagon grid cells in km)
 # Third argument: type of remapping (default: remapcon2)
+# Fourth argument: how many days should be meaned together
 NI=${2:-24}
 REMAP=${3:-"remapcon"}
 DAYS=${4:-1}
