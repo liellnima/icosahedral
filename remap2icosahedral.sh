@@ -10,8 +10,8 @@ NI=${2:-24}
 REMAP=${3:-"remapcon"}
 DAYS=${4:-1}
 ROOT=${1/.nc}
-VARNC=${5:"slp"}
-VARGRIB=${6:"msl"}
+VARNC=${5:-"slp"}
+VARGRIB=${6:-"msl"}
 
 # convert netcdf file to grib file
 
