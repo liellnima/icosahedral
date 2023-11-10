@@ -5,9 +5,9 @@
 # Third argument: how the climate variable is named in the data file(s)
 # Fourth argument: how the climate variable needs to be renamed for GRIB2 conventions
 
-# Third argument: NI parameter (distance between hexagon grid cells in km)
-# Fourth argument: type of remapping (default: remapcon2)
-# Fifth argument: how many days should be meaned together
+# Fifth argument: NI parameter (distance between hexagon grid cells in km)
+# Sixth argument: type of remapping (default: remapcon2)
+# Seventh argument: how many days should be meaned together
 
 MON=${2:-"nan"}
 VARNC=${3:-"slp"}
@@ -32,7 +32,7 @@ fi
 echo "Remap $FILES with NI=$NI and remapping function $REMAP..."
 
 if [[ -f $FILES ]]; then
-	./remap2icosahedral.sh $FILES $NI $REMAP $DAYS
+	./remap2icosahedral.sh $FILES $NI $REMAP $DAYS $VARNC $VARGRIB
 elif [[ -d $FILES ]]; then
 	for file in $FILES/*.nc; do
 		file_path=`readlink -f $file`
@@ -43,6 +43,8 @@ else
 	exit 1
 fi
 
-./getlonlat.sh
+# if needed, create vertex to lonlat mapping:
+# (as long as 6250 steps -> use the one that is already uploaded)
+# ./getlonlat.sh [SPECIFIC GRIB FILE] 
 
 echo "Finished."
