@@ -6,12 +6,18 @@
 # Fourth argument: how many days should be meaned together
 # Fifth argument: how the climate variable is named in the data file(s)
 # Sixth argument: how the climate variable needs to be renamed for GRIB2 conventions
+# Seventh argument: if one of the intermediate files should be kept.
+# 		"nan" to keep nothing (default)
+#			"nc" to keep the renamed nc file (vars following grib convention)
+#			"grib" to keep the pure grib files with the original data but new var naming
+
 NI=${2:-24}
 REMAP=${3:-"remapcon"}
 DAYS=${4:-1}
 ROOT=${1/.nc}
 VARNC=${5:-"slp"}
 VARGRIB=${6:-"msl"}
+KEEP=${7:-"nan"}
 
 # convert netcdf file to grib file
 
@@ -27,8 +33,12 @@ cdo $REMAP,gme$NI $ROOT"_longlat.grib" $ROOT"_icosahedral.grib"
 
 # delete unnecessary files
 rm $ROOT"_renamed.nc"
-rm $ROOT"_updated.nc"
-rm $ROOT"_longlat.grib"
+if [[ ! $KEEP == "nc" ]]; then
+	rm $ROOT"_updated.nc"
+fi
+if [[ ! $KEEP == "grib" ]]; then
+	rm $ROOT"_longlat.grib"
+fi
 
 # average over given number of days
 if [[ $DAYS > 1 ]]; then
