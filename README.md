@@ -39,11 +39,13 @@ The following command line tools must be installed:
 - **cdo**: Climate Data Operators version 2.0.4 (https://mpimet.mpg.de/cdo)
 - **ncrename**: netCDF Renamer version 5.0.6 (https://linux.die.net/man/1/ncrename)
 
+I recommend installting cdo not from source, but by using conda and install cdo in your environment, see e.g. [this conda forge cdo installation](https://anaconda.org/conda-forge/cdo).
+
 ## Data
 Download the data (e.g. mean level sea pressure) from [NOAA](https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html) and put it in the directory `raw/`.
 
 ### Download many files
-If you want to download several files, e.g. all annual files of Air Temperature 2m above surface, you can first move into the appropiate directory (`raw/`) and use wget here:
+If you want to download several files, e.g. all annual files of Air Temperature 2m above surface, you can first move into the appropriate directory (`raw/`) and use wget here:
 
 ```
 wget -r -nd --no-parent -A 'air.2m.gauss.*.nc' https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis/Dailies/surface_gauss/
