@@ -28,8 +28,13 @@ cdo select,name=$VARGRIB $ROOT"_renamed.nc" $ROOT"_updated.nc"
 # convert to GRIB2
 cdo -f grb2 copy $ROOT"_updated.nc" $ROOT"_longlat.grib"
 
+# NOTE: If you have a grib1 file, you can simply convert it to grib2 and select your variable afterwards
+# grib_set –s edition=2 in.grib1 out.grib2
+
 # remap to icosahedral-hexagon map
 cdo $REMAP,gme$NI $ROOT"_longlat.grib" $ROOT"_icosahedral.grib"
+
+
 
 # delete unnecessary files
 rm $ROOT"_renamed.nc"
