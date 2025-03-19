@@ -19,8 +19,18 @@ VARNC=${5:-"slp"}
 VARGRIB=${6:-"msl"}
 KEEP=${7:-"nan"}
 
-# convert netcdf file to grib file
+### 
+# NOTE: Read this if you already have grib files!
+# 1. Please check if it is grib1 or grib2 with:
+#    grib_dump $FILE
+# 2. If it is grib1, please convert to grib2:
+#    grib_set –s edition=2 in.grib1 out.grib2
+# 3. Select your variables
+# cdo select,name=$VARGRIB $ROOT"_renamed.nc" $ROOT"_updated.nc" 
+# 4.  Go to remapping
+###
 
+### convert netcdf file to grib file ###
 # rename variable for mean sea level pressure (GRIB convention)
 ncrename -h -O -v $VARNC,$VARGRIB $1 $ROOT"_renamed.nc"
 # drop time_bnds variable (GRIB convention)
@@ -28,12 +38,9 @@ cdo select,name=$VARGRIB $ROOT"_renamed.nc" $ROOT"_updated.nc"
 # convert to GRIB2
 cdo -f grb2 copy $ROOT"_updated.nc" $ROOT"_longlat.grib"
 
-# NOTE: If you have a grib1 file, you can simply convert it to grib2 and select your variable afterwards
-# grib_set –s edition=2 in.grib1 out.grib2
 
-# remap to icosahedral-hexagon map
+### remap to icosahedral-hexagon map ###
 cdo $REMAP,gme$NI $ROOT"_longlat.grib" $ROOT"_icosahedral.grib"
-
 
 
 # delete unnecessary files
