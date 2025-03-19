@@ -41,6 +41,8 @@ The following command line tools must be installed:
 
 I recommend installting cdo not from source, but by using conda and install cdo in your environment, see e.g. [this conda forge cdo installation](https://anaconda.org/conda-forge/cdo).
 
+`conda install -c conda-forge eccodes`
+
 ## Data
 Download the data (e.g. mean level sea pressure) from [NOAA](https://psl.noaa.gov/data/gridded/data.ncep.reanalysis.html) and put it in the directory `raw/`.
 
