@@ -57,9 +57,6 @@ In case you run into problems with `eccodes`, please try:
 
 `$NI` is used to set the distance between the hexagonal grid cells (in km). For more information, refer to section "Setting the NI parameter". 
 
-
-For further explanations on NI and the GME, refer e.g. to [Majewski et al](https://www.ecmwf.int/sites/default/files/elibrary/2000/10942-global-icosahedral-hexagonal-grid-point-model-gme-operational-version-and-high-resolution.pdf).
-
 `$REMAP_FUNC` is the function that should be used for remapping. Default is `remapcon` (conservative first order remapping). The following options are possible: "remapbil", "remapbic", "remapnn", "remapdis", "remapcon", "remapcon2".
 
 `$MEAN_DAYS` is the number of days over which the data should be averaged. Default is `$MEAN_DAYS=7`, i.e. a weekly average is calculated. Put `1` if you do not want that any average is calculated (or drop this argument).
@@ -112,6 +109,11 @@ Oftentimes you will run into **missing values** in your output. In that case adj
 7. If you have missing values, try an NI that can be divided by 16 or 24.
 
 
+
+For further explanations on NI and the GME, refer e.g. to [Majewski et al](https://www.ecmwf.int/sites/default/files/elibrary/2000/10942-global-icosahedral-hexagonal-grid-point-model-gme-operational-version-and-high-resolution.pdf).
+
+The following illustration is also from Majewski et al:
+![Icosahedral Grid Generation](./figures/icosahedral_grid_generation.png)
 
 # Notes
 The attributes of the GRIB2 files will automatically say that the variable in question is "surface pressure" (sp). This is not true - this is mean sea level pressure (msl). The short-name "msl" is GRIB2-conform, but for some reason the variable name is not accepted and instead read as surface pressure. Please refer to the NOAA website linked above or the raw data files to retrieve the correct attributes.
